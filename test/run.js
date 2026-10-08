@@ -191,6 +191,14 @@ await test('une propriété Search Console en erreur n’empêche pas les autres
   assert.match(beta.status.message, /sufficient permission/);
   assert.equal(sites.find((s) => s.id === 'sc-domain:alpha.example').status.ok, true);
 });
+await test('Google sans clé : un jeton temporaire fourni par GitHub suffit', async () => {
+  const r = run('keyless', { env: { DASHBOARD_PASSWORD: ALL.DASHBOARD_PASSWORD, GOOGLE_ACCESS_TOKEN: 'google-token', GOOGLE_SERVICE_ACCOUNT: 'robot@projet.iam.gserviceaccount.com' }, file: 'keyless.enc.json' });
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  const data = await read(ALL.DASHBOARD_PASSWORD, 'keyless.enc.json');
+  assert.equal(data.sites.length, 2);
+  assert.equal(data.sources.searchConsole.account, 'robot@projet.iam.gserviceaccount.com');
+  assert.ok(!r.calls.some((c) => c.includes('oauth2.googleapis.com')), 'aucun échange de clé');
+});
 await test('clés présentes mais mot de passe absent : arrêt avec une consigne claire', () => {
   const { DASHBOARD_PASSWORD, ...rest } = ALL;
   const r = run('nopw', { env: rest, file: 'nopw.enc.json' });

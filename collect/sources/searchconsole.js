@@ -41,7 +41,7 @@ export function siteLink(siteUrl) {
 const round = (v, d) => Math.round(v * 10 ** d) / 10 ** d;
 
 export async function collectSearchConsole({ credentials, config, existing, today, log }) {
-  const token = await getAccessToken(credentials);
+  const token = credentials.access_token || (await getAccessToken(credentials));
   const headers = { Authorization: `Bearer ${token}` };
   const query = (siteUrl, body) =>
     request(`${API}/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`, { method: 'POST', headers, body });

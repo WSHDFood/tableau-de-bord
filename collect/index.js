@@ -40,6 +40,9 @@ async function readJSON(file, fallback) {
 }
 
 function googleCredentials(env) {
+  // Accès sans clé : un jeton temporaire fourni par GitHub Actions (fédération d'identité Google).
+  const accessToken = (env.GOOGLE_ACCESS_TOKEN || '').trim();
+  if (accessToken) return { access_token: accessToken, client_email: (env.GOOGLE_SERVICE_ACCOUNT || '').trim() };
   let raw = env.GOOGLE_SERVICE_ACCOUNT_JSON;
   if (!raw && env.GOOGLE_SERVICE_ACCOUNT_FILE) raw = readFileSync(path.resolve(ROOT, env.GOOGLE_SERVICE_ACCOUNT_FILE), 'utf8');
   if (!raw || !raw.trim()) return null;
