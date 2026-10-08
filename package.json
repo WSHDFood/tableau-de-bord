@@ -1,0 +1,14 @@
+{
+  "name": "tableau-de-bord-audience",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Tableau de bord : Google Search Console, Instagram, Facebook et LinkedIn réunis sur une page.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "collecte": "node collect/index.js",
+    "demo": "node collect/index.js --demo",
+    "apercu": "node scripts/serve.js",
+    "test": "node test/run.js"
+  }
+}

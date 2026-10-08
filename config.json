@@ -1,0 +1,17 @@
+{
+  "searchConsole": {
+    "exclude": [],
+    "labels": {}
+  },
+  "meta": {
+    "exclude": [],
+    "labels": {},
+    "backfillInstagram": 90,
+    "backfillFacebook": 365,
+    "apiVersion": "v25.0"
+  },
+  "linkedin": {
+    "exclude": [],
+    "labels": {}
+  }
+}
